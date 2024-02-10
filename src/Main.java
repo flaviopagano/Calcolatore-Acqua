@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -5,17 +6,25 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Inserisci il tuo peso in chilogrammi: ");
-        double peso = scanner.nextDouble();
+        try {
+            // Inserisci il peso
+            System.out.print("Inserisci il tuo peso in chilogrammi: ");
+            double peso = scanner.nextDouble();
 
-        System.out.print("Inserisci il livello di attività fisica (1 = Sedentario, 2 = Moderatamente attivo, 3 = Molto attivo): ");
-        int attivitaFisica = scanner.nextInt();
+            // Inserisci un numero da 1 a 3 che indica il livello di attività fisica
+            System.out.print("Inserisci il livello di attività fisica (1 = Sedentario, 2 = Moderatamente attivo, 3 = Molto attivo): ");
+            int attivitaFisica = scanner.nextInt();
 
-        double quantitaAcquaGiornaliera = calcolaQuantitaAcqua(peso, attivitaFisica);
-        System.out.println("La quantità di acqua da bere al giorno è: " + quantitaAcquaGiornaliera + " litri");
+            double quantitaAcquaGiornaliera = calcolaQuantitaAcqua(peso, attivitaFisica);
+            System.out.println("La quantità di acqua da bere al giorno è: " + quantitaAcquaGiornaliera + " litri");
 
-        scanner.close();
+        } catch (InputMismatchException e) {
+            System.out.println("Inserisci un valore numerico valido");
+
+        }
+         scanner.close();
     }
+
 
     // Funzione per calcolare la quantità di acqua da bere al giorno
     private static double calcolaQuantitaAcqua(double peso, int attivitaFisica) {
@@ -32,10 +41,14 @@ public class Main {
                 fattoreAttivita = 2.0; // Molto attivo
                 break;
         }
-        // Si consiglia di bere 30-35 ml di acqua per ogni chilogrammo di peso corporeo
+
+        // 30-35 ml di acqua per ogni chilogrammo di peso corporeo
         double rapportoAcquaPeso = 30;
 
-        // Converti in litri
+
+        // Converti da ML a Litri
         return peso * rapportoAcquaPeso / 1000 * fattoreAttivita;
     }
+
+
 }
